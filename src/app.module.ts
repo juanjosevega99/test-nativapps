@@ -2,16 +2,24 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 
-import { ConfigModule } from "@nestjs/config";
-import { StudentsModule } from './students/students.module';
+import { MongooseModule } from '@nestjs/mongoose';
 
-import { CoursesController } from './courses/courses.controller';
-import { CoursesService } from './courses/courses.service';
+import { StudentsModule } from './students/students.module';
 import { CoursesModule } from './courses/courses.module';
+
+const { db } = require('./config/config')
+const mongoURI = db
 
 @Module({
   imports: [
-    // ConfigModule.forRoot(),
+    MongooseModule.forRoot(
+      mongoURI,
+      {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+        useFindAndModify: false,
+      },
+    ),
     StudentsModule,
     CoursesModule
   ],
