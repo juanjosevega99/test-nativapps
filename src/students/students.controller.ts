@@ -20,9 +20,9 @@ export class StudentsController {
   constructor(private studentsService: StudentsService) {}
 
   @Get('/')
-  async getProducts(@Res() res) {
-    const products = await this.studentsService.getStudents();
-    return res.status(HttpStatus.OK).json(products);
+  async getStudents(@Res() res) {
+    const students = await this.studentsService.getStudents();
+    return res.status(HttpStatus.OK).json(students);
   }
 
   @Post('/create')
@@ -35,10 +35,10 @@ export class StudentsController {
   }
 
   @Get('/:studentID')
-  async getProduct(@Res() res, @Param('studentID') studentID) {
-    const product = await this.studentsService.getStudent(studentID);
-    if (!product) throw new NotFoundException('Student Does not exists');
-    return res.status(HttpStatus.OK).json(product);
+  async getStudent(@Res() res, @Param('studentID') studentID) {
+    const student = await this.studentsService.getStudent(studentID);
+    if (!student) throw new NotFoundException('Student Does not exists');
+    return res.status(HttpStatus.OK).json(student);
   }
 
   @Put('/update')
