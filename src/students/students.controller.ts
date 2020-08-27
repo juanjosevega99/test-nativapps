@@ -67,4 +67,21 @@ export class StudentsController {
       studentDeleted,
     });
   }
+
+  @Post('/assign')
+  async assignStudentToCourse(
+    @Res() res,
+    @Query('studentID') studentID,
+    @Query('courseID') courseID,
+  ) {
+    const studentAssigned = await this.studentsService.assignStudentToCourse(
+      studentID,
+      courseID,
+    );
+    if (!studentAssigned)
+      throw new NotFoundException('Student or Course Does not exists');
+    return res.status(HttpStatus.OK).json({
+      message: 'Assigned Course successfully',
+    });
+  }
 }
