@@ -2,24 +2,28 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
+import configuration from './config/config';
 
 import { StudentsModule } from './students/students.module';
 import { CoursesModule } from './courses/courses.module';
 
-const { db } = require('./config/config')
-const mongoURI = db
-
 @Module({
   imports: [
-    MongooseModule.forRoot(
-      mongoURI,
-      {
+    ConfigModule.forRoot({
+      load: [configuration],
+    }),
+    MongooseModule.forRootAsync({
+      imports: [ConfigModule],
+      useFactory: async (configService: ConfigService) => ({
+        uri: configService.get<string>('MONGODB_URI'),
         useNewUrlParser: true,
         useUnifiedTopology: true,
-        useFindAndModify: false,
-      },
-    ),
+        useCreateIndex: true,
+      }),
+      inject: [ConfigService]
+    }),
     StudentsModule,
     CoursesModule
   ],
