@@ -4,10 +4,14 @@ import { InjectModel } from '@nestjs/mongoose';
 
 import { Student } from './interface/student.interface';
 import { CreateStudentDTO } from './dto/student.dto';
+import { Course } from 'src/courses/interfaces/course.interface';
 
 @Injectable()
 export class StudentsService {
-  constructor(@InjectModel('Student') private studentModel: Model<Student>) {}
+  constructor(
+    @InjectModel('Student') private studentModel: Model<Student>,
+    @InjectModel('Course') private courseModel: Model<Course>,
+  ) {}
 
   async getStudents(): Promise<Student[]> {
     const students = await this.studentModel.find();
@@ -41,5 +45,25 @@ export class StudentsService {
       _id: studentID,
     });
     return deletedStudent;
+  }
+
+  async assignStudentToCourse(studentID: string, courseID: string) {
+    const student = await this.studentModel.findOneAndUpdate(
+      { _id: studentID },
+      { $push: { courses: courseID } },
+    );
+    if (!student) {
+      return false;
+    }
+
+    const course = await this.courseModel.findOneAndUpdate(
+      { _id: courseID },
+      { $push: { students: studentID } },
+    );
+    if (!course) {
+      return false;
+    }
+
+    return true;
   }
 }
