@@ -7,20 +7,20 @@ import { CreateCourseDTO } from './dto/course.dto';
 
 @Injectable()
 export class CoursesService {
-  constructor(@InjectModel('Course') private studentModel: Model<Course>) {}
+  constructor(@InjectModel('Course') private courseModel: Model<Course>) {}
 
   async getCourses(): Promise<Course[]> {
-    const courses = await this.studentModel.find();
+    const courses = await this.courseModel.find();
     return courses;
   }
 
   async createCourse(createCourseDTO: CreateCourseDTO): Promise<Course> {
-    const createdStudent = new this.studentModel(createCourseDTO);
+    const createdStudent = new this.courseModel(createCourseDTO);
     return await createdStudent.save();
   }
 
   async getCourse(courseID: string): Promise<Course> {
-    const course = await this.studentModel.findById(courseID);
+    const course = await this.courseModel.findById(courseID);
     return course;
   }
 
@@ -28,7 +28,7 @@ export class CoursesService {
     courseID: string,
     createCourseDTO: CreateCourseDTO,
   ): Promise<Course> {
-    const updatedCourse = await this.studentModel.findOneAndUpdate(
+    const updatedCourse = await this.courseModel.findOneAndUpdate(
       { _id: courseID },
       createCourseDTO,
       { new: true },
@@ -37,7 +37,7 @@ export class CoursesService {
   }
 
   async deleteCourse(courseID: string): Promise<Course> {
-    const deletedProduct = await this.studentModel.findByIdAndDelete({
+    const deletedProduct = await this.courseModel.findByIdAndDelete({
       _id: courseID,
     });
     return deletedProduct;
