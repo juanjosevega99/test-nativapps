@@ -19,8 +19,8 @@ import { CoursesModule } from './courses/courses.module';
       useFactory: async (configService: ConfigService) => ({
         uri: configService.get<string>('MONGODB_URI'),
         useNewUrlParser: true,
-        useUnifiedTopology: true,
-        useCreateIndex: true,
+        useFindAndModify: false,
+        useCreateIndex: true
       }),
       inject: [ConfigService]
     }),
