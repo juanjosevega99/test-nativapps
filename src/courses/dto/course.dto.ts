@@ -1,6 +1,6 @@
-export class CreateProductDTO {
-  name: string
-  schedule: string
-  dateStart: Date
-  dateEnd: Date
+export class CreateCourseDTO {
+  name: string;
+  schedule: string;
+  dateStart: Date;
+  dateEnd: Date;
 }
