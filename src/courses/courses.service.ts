@@ -9,22 +9,22 @@ import { CreateCourseDTO } from './dto/course.dto';
 export class CoursesService {
   constructor(@InjectModel('Course') private studentModel: Model<Course>) {}
 
-  async getStudents(): Promise<Course[]> {
+  async getCourses(): Promise<Course[]> {
     const courses = await this.studentModel.find();
     return courses;
   }
 
-  async createStudent(createCourseDTO: CreateCourseDTO): Promise<Course> {
+  async createCourse(createCourseDTO: CreateCourseDTO): Promise<Course> {
     const createdStudent = new this.studentModel(createCourseDTO);
     return await createdStudent.save();
   }
 
-  async getStudent(courseID: string): Promise<Course> {
+  async getCourse(courseID: string): Promise<Course> {
     const course = await this.studentModel.findById(courseID);
     return course;
   }
 
-  async updateStudent(
+  async updateCourse(
     courseID: string,
     createCourseDTO: CreateCourseDTO,
   ): Promise<Course> {
@@ -36,7 +36,7 @@ export class CoursesService {
     return updatedCourse;
   }
 
-  async deleteStudent(courseID: string): Promise<Course> {
+  async deleteCourse(courseID: string): Promise<Course> {
     const deletedProduct = await this.studentModel.findByIdAndDelete({
       _id: courseID,
     });
