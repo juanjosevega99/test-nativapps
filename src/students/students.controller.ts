@@ -1,4 +1,4 @@
-import { Controller, HttpStatus, Get, Res, Post, Body } from '@nestjs/common';
+import { Controller, HttpStatus, Get, Res, Post, Body, NotFoundException, Param } from '@nestjs/common';
 
 import { CreateStudentDTO } from './dto/student.dto'
 import { StudentsService } from './students.service'
@@ -22,4 +22,12 @@ export class StudentsController {
       student
     })
   }
+
+  @Get('/:studentID')
+  async getProduct(@Res() res, @Param('studentID') studentID) {
+    const product = await this.studentsService.getStudent(studentID)
+    if (!product) throw new NotFoundException('Product Does not exists')
+    return res.status(HttpStatus.OK).json(product)
+  }
+
 }
