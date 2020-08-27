@@ -37,21 +37,21 @@ export class StudentsController {
   @Get('/:studentID')
   async getProduct(@Res() res, @Param('studentID') studentID) {
     const product = await this.studentsService.getStudent(studentID);
-    if (!product) throw new NotFoundException('Product Does not exists');
+    if (!product) throw new NotFoundException('Student Does not exists');
     return res.status(HttpStatus.OK).json(product);
   }
 
-  @Put('update')
+  @Put('/update')
   async updateStudent(
     @Res() res,
     @Body() createStudentDTO: CreateStudentDTO,
-    @Query('productID') productID,
+    @Query('studentID') studentID,
   ) {
     const updatedStudent = await this.studentsService.updateStudent(
-      productID,
+      studentID,
       createStudentDTO,
     );
-    if (!updatedStudent) throw new NotFoundException('Product Does not exists');
+    if (!updatedStudent) throw new NotFoundException('Student Does not exists');
     return res.status(HttpStatus.OK).json({
       message: 'Student Updated Successfully',
       updatedStudent,
@@ -59,8 +59,8 @@ export class StudentsController {
   }
 
   @Delete('/delete')
-  async deleteStudent(@Res() res, @Query('productID') productID) {
-    const studentDeleted = await this.studentsService.deleteStudent(productID);
+  async deleteStudent(@Res() res, @Query('studentID') studentID) {
+    const studentDeleted = await this.studentsService.deleteStudent(studentID);
     if (!studentDeleted) throw new NotFoundException('Student Does not exists');
     return res.status(HttpStatus.OK).json({
       message: 'Student deleted successfully',
