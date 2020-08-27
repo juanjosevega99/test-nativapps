@@ -1,4 +1,4 @@
-export class CreateProductDTO {
+export class CreateStudentDTO {
   name: string
   lastName: string
   age: number
