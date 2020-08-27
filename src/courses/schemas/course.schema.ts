@@ -1,6 +1,6 @@
 import { Schema } from "mongoose";
 
-export const StudentSchema = new Schema({
+export const CourseSchema = new Schema({
   name: String,
   schedule: String,
   dateStart: Date,
