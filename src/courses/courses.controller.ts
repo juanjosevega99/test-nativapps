@@ -24,6 +24,12 @@ export class CoursesController {
     const courses = await this.coursesService.getCourses();
     return res.status(HttpStatus.OK).json(courses);
   }
+  
+  @Get('/top')
+  async topCourses(@Res() res) {
+    const courses = await this.coursesService.top();
+    return res.status(HttpStatus.OK).json(courses);
+  }
 
   @Post('/create')
   async createCourse(@Res() res, @Body() createCourseDTO: CreateCourseDTO) {
