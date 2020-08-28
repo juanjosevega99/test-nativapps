@@ -15,23 +15,27 @@ export class CoursesService {
     const courses = await this.courseModel.find();
     return courses;
   }
-  
-  async top() {
-    const sixMonthsAgo = moment().subtract(6, 'months').toISOString()
-    const courses = await this.courseModel.find({ dateEnd: { $gte: new Date(sixMonthsAgo) } });
 
-    let topCourses = []
-    courses.forEach((item) => {
+  async topCourses() {
+    const sixMonthsAgo = moment()
+      .subtract(6, 'months')
+      .toISOString();
+    const courses = await this.courseModel.find({
+      dateEnd: { $gte: new Date(sixMonthsAgo) },
+    });
+
+    let topCourses = [];
+    courses.forEach(item => {
       if (item.students >= 0) {
-        topCourses.push(item)
+        topCourses.push(item);
         topCourses.sort(function(a, b) {
-          return a - b
-        })
+          return a - b;
+        });
       }
-    })
-    topCourses = topCourses.filter((students, idx) => idx < 3)
+    });
+    topCourses = topCourses.filter((students, idx) => idx < 3);
 
-    return topCourses
+    return topCourses;
   }
 
   async createCourse(createCourseDTO: CreateCourseDTO): Promise<Course> {

@@ -24,10 +24,10 @@ export class CoursesController {
     const courses = await this.coursesService.getCourses();
     return res.status(HttpStatus.OK).json(courses);
   }
-  
+
   @Get('/top')
   async topCourses(@Res() res) {
-    const courses = await this.coursesService.top();
+    const courses = await this.coursesService.topCourses();
     return res.status(HttpStatus.OK).json(courses);
   }
 
