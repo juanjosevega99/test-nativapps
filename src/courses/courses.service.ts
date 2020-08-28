@@ -16,7 +16,7 @@ export class CoursesService {
     return courses;
   }
 
-  async topCourses() {
+  async topCourses(): Promise<Course[]> {
     const sixMonthsAgo = moment()
       .subtract(6, 'months')
       .toISOString();
