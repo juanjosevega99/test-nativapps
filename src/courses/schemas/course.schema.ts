@@ -5,10 +5,8 @@ export const CourseSchema = new Schema({
   schedule: String,
   dateStart: Date,
   dateEnd: Date,
-  students: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: 'Students'
+  students: {
+      type: Number,
+      default: 0
     }
-  ],
 })
