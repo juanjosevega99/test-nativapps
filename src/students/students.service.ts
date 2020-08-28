@@ -58,7 +58,7 @@ export class StudentsService {
 
     const course = await this.courseModel.findOneAndUpdate(
       { _id: courseID },
-      { $push: { students: studentID } },
+      { $inc: { students: 1 } },
     );
     if (!course) {
       return false;
