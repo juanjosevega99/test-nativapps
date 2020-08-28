@@ -5,4 +5,5 @@ export interface Course extends Document {
   schedule: string;
   dateStart: Date;
   dateEnd: Date;
+  students: number
 }
